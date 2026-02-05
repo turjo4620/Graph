@@ -19,24 +19,28 @@ public:
         l[v].push_back(u);
     }
 
-    void bfs(){
-        queue<int>q;
-        vector<bool>vis(V, false);
-        q.push(0);
-        vis[0] = true;
-        while(q.size() > 0){
-            int u = q.front();
-            q.pop();
-            cout<<u<<" ";
-            for(int v : l[u]){
-                if(!vis[v]){
-                    vis[v] = true;
-                    q.push(v);
-                }
+
+    // DFS - helper
+
+    void dfs_helper(int u, vector<bool>&vis){
+        cout<<u<<" ";
+        vis[u] = true;
+
+        for(int v : l[u]){
+            if(!vis[v]){
+                dfs_helper(v, vis);
             }
         }
-
     }
+    
+    void dfs(){
+        int src = 0;
+        vector<bool>vis(V, false);
+
+        dfs_helper(src, vis);
+        cout<<endl;
+    }
+
     // void print(){
     //     for(int i = 0; i < V; i++){
     //         cout<<i<<" : "<<" ";
@@ -60,11 +64,9 @@ int main(){
     g.addEdge(5, 4);
     g.addEdge(3, 4);
 
+    g.dfs();
+
     // g.print();
-
-    g.bfs();
-
-
 
     
     return 0;
